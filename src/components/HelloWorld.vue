@@ -27,7 +27,7 @@
 
       <el-main>
         <template v-if="showTable === 'TechTable'">
-          <el-table :data="tableData">
+          <el-table :data="tableData" key="TechTable">
             <el-table-column prop="keyword" label="关键词" width="140">
               <template slot-scope="scope">
                 <span>人脸识别</span>
@@ -41,7 +41,7 @@
             </el-table-column>
             <el-table-column prop="operation" label="标注">
               <template slot-scope="scope">
-                <el-button type="info" size="mini" >非同义词</el-button>
+                <el-button type="info" size="mini" @click="open">非同义词</el-button>
                 <el-button type="warning" size="mini">同义词</el-button>
                 <el-button type="success" size="mini">新技术标签</el-button>
               </template>
@@ -49,8 +49,8 @@
           </el-table>
         </template>
 
-        <template v-if="showTable === 'CompanyTable'">
-          <el-table :data="tableData">
+        <template v-else-if="showTable === 'CompanyTable'">
+          <el-table :data="tableData" key="CompanyTable">
             <el-table-column prop="keyword" label="关键词" width="140">
               <template slot-scope="scope">
                 <span>京东</span>
@@ -70,8 +70,8 @@
           </el-table>
         </template>
 
-        <template v-if="showTable === 'RelationTable'">
-          <el-table :data="tableData">
+        <template v-else-if="showTable === 'RelationTable'">
+          <el-table :data="tableData" key="RelationTable">
             <el-table-column prop="keyword" label="新闻来源" width="140">
               <template slot-scope="scope">
                 <span>20198</span>
@@ -125,6 +125,17 @@ export default {
   methods: {
     setShowTable(showTable) {
       this.showTable = showTable;
+    },
+    open() {
+      this.$alert("这是一段内容", "标题名称", {
+        confirmButtonText: "确定",
+        callback: action => {
+          this.$message({
+            type: "info",
+            message: `action: ${action}`
+          });
+        }
+      });
     }
   }
 };
